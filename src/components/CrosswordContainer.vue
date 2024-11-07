@@ -43,16 +43,12 @@ const placeWord = (word, startRow, startCol, orientation, id) => {
         correct: false,
         firstLetter: i === 0,
         id: i === 0 ? id : null,
-        crossedId: null,  
+        crossedId: null,
       };
+    } else if (i === 0 && occupiedCells[cellKey].id) {
+      occupiedCells[cellKey].crossedId = id;
     }
 
-    if (i === 0 && orientation === 'vertical') {
-      const crossCellKey = `${startRow}-${startCol}`;
-      if (occupiedCells[crossCellKey] && occupiedCells[crossCellKey].id) {
-        occupiedCells[cellKey].crossedId = occupiedCells[crossCellKey].id;
-      }
-    }
     if (orientation === 'horizontal') col++;
     else row++;
   }
