@@ -31,7 +31,6 @@ onMounted(async () => {
     const count = route.query.count || 5;
     const response = await fetch(`http://127.0.0.1:8000/api/get-data/?count=${count}`);
     const data = await response.json();
-    console.log(data);
     if (Array.isArray(data) && data[0]?.words) {
       crosswordData.value = data[0];
     } else {
