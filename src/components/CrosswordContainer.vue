@@ -7,15 +7,13 @@
       :style="{ gridRowStart: cell.row + 1, gridColumnStart: cell.col + 1 }"
     >
       <input v-model="cell.value" type="text" maxlength="1" @input="updateCrosswordState" />
-      <div v-if="cell.id" class="question-number">
-        {{ cell.id }}<span v-if="cell.crossedId">({{ cell.crossedId }})</span>
-      </div>
+      <div v-if="cell.id && cell.firstLetter" class="question-number">{{ cell.id }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import { ref, watch, defineProps, defineEmits  } from 'vue';
 
 const emit = defineEmits(['wordCorrect']);
 
@@ -43,15 +41,7 @@ const placeWord = (word, startRow, startCol, orientation, id) => {
         correct: false,
         firstLetter: i === 0,
         id: i === 0 ? id : null,
-        crossedId: null,  
       };
-    }
-
-    if (i === 0 && orientation === 'vertical') {
-      const crossCellKey = `${startRow}-${startCol}`;
-      if (occupiedCells[crossCellKey] && occupiedCells[crossCellKey].id) {
-        occupiedCells[cellKey].crossedId = occupiedCells[crossCellKey].id;
-      }
     }
     if (orientation === 'horizontal') col++;
     else row++;
@@ -88,7 +78,7 @@ const updateCrosswordState = () => {
         if (wordObj.orientation === 'horizontal') col++;
         else row++;
       }
-      emit('wordCorrect', wordObj.id);
+      emit('wordCorrect', wordObj.id); 
     }
   });
 };
