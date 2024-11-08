@@ -1,14 +1,16 @@
 <template>
-  <div id="crossword-container">
-    <div
-      v-for="(cell, key) in cells"
-      :key="key"
-      :class="['cell', cell.correct ? 'correct-word' : '']"
-      :style="{ gridRowStart: cell.row + 1, gridColumnStart: cell.col + 1 }"
-    >
-      <input v-model="cell.value" type="text" maxlength="1" @input="updateCrosswordState" />
-      <div v-if="cell.id" class="question-number">
-        {{ cell.id }}<span v-if="cell.crossedId">({{ cell.crossedId }})</span>
+  <div class="center-container">
+    <div id="crossword-container">
+      <div
+        v-for="(cell, key) in cells"
+        :key="key"
+        :class="['cell', cell.correct ? 'correct-word' : '']"
+        :style="{ gridRowStart: cell.row + 1, gridColumnStart: cell.col + 1 }"
+      >
+        <input v-model="cell.value" type="text" maxlength="1" @input="updateCrosswordState" />
+        <div v-if="cell.id" class="question-number">
+          {{ cell.id }}<span v-if="cell.crossedId">({{ cell.crossedId }})</span>
+        </div>
       </div>
     </div>
   </div>
@@ -93,15 +95,18 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
 </script>
 
 <style scoped>
+.center-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
 #crossword-container {
   display: grid;
-  grid-template-columns: repeat(19, 40px);
-  grid-template-rows: repeat(14, 40px);
   gap: 4px;
-  background-color: #f1f1f1;
   width: max-content;
-  margin: 20px;
   position: relative;
+ 
 }
 
 .cell {
@@ -121,7 +126,7 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
   font-size: 18px;
   font-weight: bold;
   color: #333;
-  background-color: #fff;
+  background-color: #ccc;
 }
 
 .correct-word input {
