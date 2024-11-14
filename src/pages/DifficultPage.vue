@@ -1,5 +1,6 @@
 <template>
     <h3>Выберете сложность сканворда</h3>
+
     <div class="diff_butns">
       <ButtonComponent 
         text="5 слов"
@@ -13,7 +14,8 @@
         text="10 слов"
         route="/crossword"
         :wordCount="10" />
-    </div>
+  </div>
+
   </template>
 
 <script setup>
@@ -23,6 +25,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 
 
 <style scoped>
+
 .diff_butns{
   display: flex;
   align-items: center;

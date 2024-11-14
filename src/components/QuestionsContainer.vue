@@ -22,10 +22,11 @@ const props = defineProps({
   },
 });
 
+console.log(props.questions)
 const answeredQuestions = computed(() =>
   props.questions.map((q) => ({
     ...q,
-    answered: q.word.toUpperCase() === (q.userWord || '').toUpperCase(),
+    answered: q.correct,
   }))
 );
 

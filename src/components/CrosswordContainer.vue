@@ -32,10 +32,10 @@ const props = defineProps({
 const cells = ref({});
 const occupiedCells = {};
 
-const placeWord = (word, startRow, startCol, orientation, id) => {
+const placeWord = (word_len, startRow, startCol, orientation, id) => {
   let col = startCol;
   let row = startRow;
-  for (let i = 0; i < word.length; i++) {
+  for (let i = 0; i < word_len; i++) {
     const cellKey = `${row}-${col}`;
     if (!occupiedCells[cellKey]) {
       occupiedCells[cellKey] = {
@@ -51,45 +51,51 @@ const placeWord = (word, startRow, startCol, orientation, id) => {
       occupiedCells[cellKey].crossedId = id;
     }
 
-    if (orientation === 'horizontal') col++;
+    if (orientation === 'Горизонтально') col++;
     else row++;
   }
 };
 
 const initCrossword = () => {
   props.crosswordData.words.forEach((wordObj) =>
-    placeWord(wordObj.word, wordObj.start_row, wordObj.start_col, wordObj.orientation, wordObj.id)
+    placeWord(wordObj.word_len, wordObj.start_row, wordObj.start_col, wordObj.orientation, wordObj.id)
   );
   cells.value = { ...occupiedCells };
 };
 
-const checkWord = (wordObj) => {
+const checkWord = async (wordObj) => {
   let col = wordObj.start_col;
   let row = wordObj.start_row;
   let userWord = '';
-  for (let i = 0; i < wordObj.word.length; i++) {
+  for (let i = 0; i < wordObj.word_len; i++) {
     userWord += cells.value[`${row}-${col}`]?.value.toUpperCase() || '';
-    if (wordObj.orientation === 'horizontal') col++;
+    if (wordObj.orientation === 'Горизонтально') col++;
     else row++;
   }
-  return userWord === wordObj.word.toUpperCase();
+  const response = await fetch(`http://127.0.0.1:8000/api/check-data/?id=${wordObj.id_db}&answer=${userWord}`);
+  // const response = await fetch(`http://5.35.124.40:8000/api/check-data/?id=${wordObj.id_db}&answer=${userWord}`);
+  const data = await response.json();
+  return data;
 };
 
-const updateCrosswordState = () => {
-  props.crosswordData.words.forEach((wordObj) => {
-    if (checkWord(wordObj)) {
+const updateCrosswordState = async () => { 
+  for (const wordObj of props.crosswordData.words) {
+    const flag = await checkWord(wordObj);
+    if (flag) {
+      wordObj.correct = true
       let col = wordObj.start_col;
       let row = wordObj.start_row;
-      for (let i = 0; i < wordObj.word.length; i++) {
+      for (let i = 0; i < wordObj.word_len; i++) {
         const cell = cells.value[`${row}-${col}`];
         if (cell) cell.correct = true;
-        if (wordObj.orientation === 'horizontal') col++;
+        if (wordObj.orientation === 'Горизонтально') col++;
         else row++;
       }
       emit('wordCorrect', wordObj.id);
     }
-  });
+  }
 };
+
 
 watch(() => props.crosswordData, initCrossword, { immediate: true });
 </script>
@@ -110,8 +116,8 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
 }
 
 .cell {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,6 +127,7 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
 .cell input {
   width: 100%;
   height: 100%;
+  border-radius: 10px;
   border: 1px solid #ddd;
   text-align: center;
   font-size: 18px;
@@ -130,7 +137,7 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
 }
 
 .correct-word input {
-  background-color: green;
+  background-color: rgb(22, 178, 22);
   color: white;
   pointer-events: none;
 }
@@ -138,7 +145,7 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
 .question-number {
   position: absolute;
   top: 2px;
-  left: 2px;
+  left: 5px;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.5);
 }

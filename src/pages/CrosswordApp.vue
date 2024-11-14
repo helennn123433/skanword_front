@@ -3,6 +3,7 @@
     <div v-if="isLoading" class="loading-overlay">
       <div class="spinner"></div>
     </div>
+    
     <div v-else>
       <CrosswordContainer 
         :crosswordData="crosswordData" 
@@ -11,11 +12,11 @@
       <QuestionsContainer 
         :questions="crosswordData.words" 
       />
-      <div v-if="isCompleted" class="completion-message">
+    </div>
+    <div v-if="isCompleted" class="completion-message">
         <p>Сканворд завершён. Можете пройти снова.</p>
         <button @click="restartCrossword">Пройти снова</button>
       </div>
-    </div>
   </div>
 </template>
 
@@ -35,9 +36,9 @@ const isLoading = ref(true);
 onMounted(async () => {
   try {
     const count = route.query.count || 5;
-    const response = await fetch(`http://127.0.0.1:8000/api/get-data/?count=${count}`);
+    const response = await fetch(`http://127.0.0.1:8000/api/get-cross/?count=${count}`);
+    // const response = await fetch(`http://5.35.124.40:8000/api/get-cross/?count=${count}`);
     const data = await response.json();
-    console.log(data);
     if (Array.isArray(data) && data[0]?.words) {
       crosswordData.value = data[0];
     } else {
@@ -58,7 +59,7 @@ const handleWordCorrect = (wordId) => {
 };
 
 const isCompleted = computed(() => {
-  return crosswordData.value.words.every(q => q.word.toUpperCase() === (q.userWord || '').toUpperCase());
+  return crosswordData.value.words.every(q => q.correct);
 });
 
 const restartCrossword = () => {
@@ -73,7 +74,7 @@ const restartCrossword = () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(240, 240, 240, 0.9); 
+  background-color: rgba(240, 240, 240, 1); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,7 +100,7 @@ const restartCrossword = () => {
 }
 
 .completion-message {
-  margin-top: 20px;
+  margin: 20px 0px;
   font-size: 18px;
   text-align: center;
 }
