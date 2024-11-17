@@ -37,9 +37,14 @@ const answeredQuestions = computed(() =>
   margin: 20px;
 }
 
-.question {
+.question  {
   margin-bottom: 10px;
+  font-size: 20px;
 }
+.question strong {
+  font-size: 20px;
+}
+
 
 .answered-question {
   color: gray;

@@ -1,8 +1,13 @@
 <template>
     <div class="container">
     <ButtonComponent 
-    text="Начало"
-    route="/selectdifficulty" />
+    text="Войти как игрок"
+    route="/selectdifficulty"
+    color="green" />
+
+    <ButtonComponent
+    text="Войти как администратор"
+    route="/authadmin" />
     </div>
 </template>
 
@@ -16,6 +21,8 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: column;
+    gap: 10px;
 }
 
 </style>

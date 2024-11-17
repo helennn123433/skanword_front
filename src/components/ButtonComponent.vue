@@ -1,5 +1,5 @@
 <template>
-    <button @click="handleClick">
+    <button :style="{background : props.color}" @click="handleClick">
       {{ text }}
     </button>
   </template>
@@ -11,7 +11,8 @@ import { defineProps } from 'vue'
 const props = defineProps({
   text: String,
   route: String,
-  wordCount: Number
+  wordCount: Number,
+  color: String
 });
   
 const router = useRouter();

@@ -15,6 +15,16 @@ const routes = [
     name: "Crossword",
     component:() => import('@/pages/CrosswordApp.vue')
   },
+  {
+    path: "/authadmin",
+    name: "Admin",
+    component:() => import('@/pages/AdminAuth.vue')
+  },
+  {
+    path: "/getalldata",
+    name: "Data",
+    component:() => import('@/pages/DataAdmin.vue')
+  }
 ];
 
 const router = createRouter({

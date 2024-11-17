@@ -5,18 +5,20 @@
       <ButtonComponent 
         text="5 слов"
         route="/crossword"
-        :wordCount="5" />
+        :wordCount="5"
+        color="green" />
       <ButtonComponent 
         text="7 слов"
         route="/crossword"
-        :wordCount="7" />
+        :wordCount="7"
+        color="#ffd800" />
       <ButtonComponent 
         text="10 слов"
         route="/crossword"
-        :wordCount="10" />
+        :wordCount="10" 
+        color="red"/>
   </div>
-
-  </template>
+</template>
 
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'

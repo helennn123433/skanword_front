@@ -72,8 +72,8 @@ const checkWord = async (wordObj) => {
     if (wordObj.orientation === 'Горизонтально') col++;
     else row++;
   }
-  // const response = await fetch(`http://127.0.0.1:8000/api/check-data/?id=${wordObj.id_db}&answer=${userWord}`);
-  const response = await fetch(`http://5.35.124.40:8000/api/check-data/?id=${wordObj.id_db}&answer=${userWord}`);
+  const response = await fetch(`http://127.0.0.1:8000/api/check-data/?id=${wordObj.id_db}&answer=${userWord}`);
+  // const response = await fetch(`http://5.35.124.40:8000/api/check-data/?id=${wordObj.id_db}&answer=${userWord}`);
   const data = await response.json();
   return data;
 };
