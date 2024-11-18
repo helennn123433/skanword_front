@@ -6,8 +6,8 @@
             <div class="main__inputs">
                 <input v-model="question" type="text" placeholder="Вопрос">
                 <input v-model="answer" type="text" placeholder="Ответ на вопрос">
-            <button @click="createWord" class="create__word">Создать</button>
-        </div>
+                <button @click="createWord" class="create__word">Создать</button>
+            </div>
         </div>
     </div>    
 </template>

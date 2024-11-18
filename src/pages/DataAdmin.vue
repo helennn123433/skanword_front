@@ -32,9 +32,9 @@
                         placeholder="Редактировать ответ"
                         class="edit-input"
                     />
-                    <button class="save__word" @click="saveEdit(item)">✔</button>
-                    <button class="cancel__word" @click="cancelEdit(item)">✖</button>
                 </div>
+                <button class="save__word" @click="saveEdit(item)">✔</button>
+                <button class="cancel__word" @click="cancelEdit(item)">✖</button>
             </template>
         </div>
     </div>
@@ -115,6 +115,7 @@ onMounted(() => {
 .data__container {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 .data__title {
     display: flex;
@@ -127,6 +128,10 @@ onMounted(() => {
     flex-direction: column;
     margin: 15px;
     gap: 10px;
+    border: 3px solid #4a90e2;
+    width: 90%;
+    padding: 10px;
+    align-items: center;
 }
 .create__word {
     background-color: #4a90e2;
@@ -136,6 +141,12 @@ onMounted(() => {
     cursor: pointer;
     padding: 10px;
     border-radius: 10px;
+}
+.button__delete span{
+    max-width: 800px; 
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
 }
 .delete__word,
 .edit__word,

@@ -1,16 +1,45 @@
 <template>
     <div class="auth_container">
         <h2>Введите пароль для администратора</h2>
-        <input type="password" /> 
+        <input type="password" v-model="password"/> 
         <ButtonComponent
             text="Авторизоваться"
-            route="/getalldata"/>  
+            @click="authorize"/>  
     </div>
 </template>
 
 
 <script setup>
+import { ref, onBeforeMount } from 'vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
+
+const password = ref('');
+
+
+const authorize = async () => {
+    if (!password.value) {
+        alert('Введите пароль!');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/admin/login/?password=${encodeURIComponent(password.value)}`);
+        const data = await response.json();
+        if (data) {
+            window.location.href = '/#/getalldata/';
+        } else {
+            alert('Ошибка авторизации');
+        }
+    } catch (err) {
+        console.error('Ошибка подключения', err);
+        alert('Ошибка подключения');
+    }
+};
+
+onBeforeMount(() =>{
+
+})
+
 </script>
 
 <style scoped>
