@@ -1,20 +1,23 @@
 <template>
   <div class="center-container">
-    <div id="crossword-container">
-      <div
-        v-for="(cell, key) in cells"
-        :key="key"
-        :class="['cell', cell.correct ? 'correct-word' : '']"
-        :style="{ gridRowStart: cell.row + 1, gridColumnStart: cell.col + 1 }"
-      >
-        <input v-model="cell.value" type="text" maxlength="1" @input="updateCrosswordState" />
-        <div v-if="cell.id" class="question-number">
-          {{ cell.id }}<span v-if="cell.crossedId">({{ cell.crossedId }})</span>
+    <div class="overflow-container">
+      <div id="crossword-container">
+        <div
+          v-for="(cell, key) in cells"
+          :key="key"
+          :class="['cell', cell.correct ? 'correct-word' : '']"
+          :style="{ gridRowStart: cell.row + 1, gridColumnStart: cell.col + 1 }"
+        >
+          <input v-model="cell.value" type="text" maxlength="1" @input="updateCrosswordState" />
+          <div v-if="cell.id" class="question-number">
+            {{ cell.id }}<span v-if="cell.crossedId">({{ cell.crossedId }})</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, watch, defineProps, defineEmits } from 'vue';
@@ -105,6 +108,16 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
   display: flex;
   justify-content: center;
   margin-top: 40px;
+  padding: 20px;
+}
+
+
+.overflow-container {
+  overflow: auto;
+  max-width: 100vw;
+  max-height: 80vh; 
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 #crossword-container {
@@ -112,7 +125,6 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
   gap: 4px;
   width: max-content;
   position: relative;
- 
 }
 
 .cell {
@@ -149,4 +161,29 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
   font-size: 12px;
   color: rgba(0, 0, 0, 0.5);
 }
+
+
+@media (max-width: 768px) {
+  .cell {
+    width: 40px;
+    height: 40px;
+  }
+  .cell input {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .cell {
+    width: 30px;
+    height: 30px;
+  }
+  .cell input {
+    font-size: 14px;
+  }
+  .question-number {
+    font-size: 10px;
+  }
+}
+
 </style>
