@@ -37,11 +37,11 @@ onMounted(async () => {
   try {
     let response;
     if(route.query.count == 0){
-     response = await fetch(`http://127.0.0.1:8000/api/get-cross/`);
+     response = await fetch(`http://5.35.124.40:8000/api/get-cross/`);
     }else{
       const count = route.query.count || 5;
     // const response = await fetch(`http://5.35.124.40:8000/api/get-cross/?count=${count}`);
-      response = await fetch(`http://127.0.0.1:8000/api/get-cross/?count=${count}`);
+      response = await fetch(`http://5.35.124.40:8000/api/get-cross/?count=${count}`);
     }
     const data = await response.json();
     if (Array.isArray(data) && data[0]?.words) {

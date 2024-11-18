@@ -26,7 +26,7 @@ const authorize = async () => {
         return;
     }
     try {
-        const response = await fetch(`http://127.0.0.1:8000/admin/login/?password=${encodeURIComponent(password.value)}`);
+        const response = await fetch(`http://5.35.124.40:8000/admin/login/?password=${encodeURIComponent(password.value)}`);
         const data = await response.json();
         if (data) {
             sessionStorage.setItem('adminPassword', password.value);

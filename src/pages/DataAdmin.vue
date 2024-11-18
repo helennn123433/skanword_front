@@ -62,7 +62,7 @@ const enableEditMode = (item) => {
 
 const saveEdit = async (item) => {
     try {
-        await fetch(`http://127.0.0.1:8000/admin/update-solution/`, {
+        await fetch(`http://5.35.124.40:8000/admin/update-solution/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ const cancelEdit = (item) => {
 const deleteWord = async (id_solution) => {
     
     try {
-        await fetch(`http://127.0.0.1:8000/admin/delete-solution/?id_solution=${id_solution}`, {
+        await fetch(`http://5.35.124.40:8000/admin/delete-solution/?id_solution=${id_solution}`, {
             method: 'DELETE',
         });
         items.value = items.value.filter(word => word.id_solution !== id_solution);
@@ -100,7 +100,7 @@ const deleteWord = async (id_solution) => {
 const getAllData = async () => {
     const password = sessionStorage.getItem('adminPassword');
     try {
-        const response = await fetch(`http://127.0.0.1:8000/admin/get-data/?password=${password}`)
+        const response = await fetch(`http://5.35.124.40:8000/admin/get-data/?password=${password}`)
             items.value = await response.json();
     } catch (err) {
         console.error(err);
