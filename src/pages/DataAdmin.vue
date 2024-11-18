@@ -1,31 +1,26 @@
 <template>
     <div class="data__container">
-        <div class="data__title">
+        <div v-if="password !== null" class="data__title">
             <h4>Все данные кроссворда</h4>
             <button class="create__word" @click="openCreateModel">Создать</button>
         </div>
         <div v-for="item in items" :key="item.id_solution" class="data__item">
-            <div class="button__delete">
-                <template v-if="!item.isEditing">
-                    <span>{{ item.id_question__question }}</span>
+            <template v-if="!item.isEditing">
+                <span>{{ item.id_question__question }}</span>
+                <span><b>{{ item.id_answer__answer }}</b></span>
+                <div class="save__changes">
                     <button class="delete__word" @click="deleteWord(item.id_solution)">&#128465;</button>
                     <button class="edit__word" @click="enableEditMode(item)">&#9998;</button>
-                </template>
-                <template v-else>
-                    <div class="edit-group">
-                        <input
-                            v-model="item.editQuestion"
-                            placeholder="Редактировать вопрос"
-                            class="edit-input"
-                        />
-                    </div>
-                </template>
-            </div>
-
-            <template v-if="!item.isEditing">
-                <span><b>{{ item.id_answer__answer }}</b></span>
+                </div>
             </template>
             <template v-else>
+                <div class="edit-group">
+                    <input
+                        v-model="item.editQuestion"
+                        placeholder="Редактировать вопрос"
+                        class="edit-input"
+                    />
+                </div>
                 <div class="edit-group">
                     <input
                         v-model="item.editAnswer"
@@ -33,9 +28,12 @@
                         class="edit-input"
                     />
                 </div>
-                <button class="save__word" @click="saveEdit(item)">✔</button>
-                <button class="cancel__word" @click="cancelEdit(item)">✖</button>
+                <div class="save__changes">
+                    <button class="save__word" @click="saveEdit(item)">✔</button>
+                    <button class="cancel__word" @click="cancelEdit(item)">✖</button>
+                </div>
             </template>
+
         </div>
     </div>
     <CreateProd @closeModal="closeModal" v-if="createModal" />
@@ -45,6 +43,7 @@
 import { onMounted, ref } from 'vue';
 import CreateProd from '@/components/CreateProd.vue';
 
+const password = sessionStorage.getItem('adminPassword');
 const items = ref([]);
 const createModal = ref(false);
 
@@ -87,6 +86,7 @@ const cancelEdit = (item) => {
 };
 
 const deleteWord = async (id_solution) => {
+    
     try {
         await fetch(`http://127.0.0.1:8000/admin/delete-solution/?id_solution=${id_solution}`, {
             method: 'DELETE',
@@ -98,9 +98,10 @@ const deleteWord = async (id_solution) => {
 };
 
 const getAllData = async () => {
+    const password = sessionStorage.getItem('adminPassword');
     try {
-        const response = await fetch(`http://127.0.0.1:8000/admin/get-data/`);
-        items.value = await response.json();
+        const response = await fetch(`http://127.0.0.1:8000/admin/get-data/?password=${password}`)
+            items.value = await response.json();
     } catch (err) {
         console.error(err);
     }
@@ -126,6 +127,7 @@ onMounted(() => {
 .data__item {
     display: flex;
     flex-direction: column;
+    border-radius: 15px;
     margin: 15px;
     gap: 10px;
     border: 3px solid #4a90e2;
@@ -179,5 +181,8 @@ onMounted(() => {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+.save__changes{
+    display: flex;
 }
 </style>

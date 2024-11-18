@@ -1,7 +1,10 @@
 <template>
     <div class="auth_container">
         <h2>Введите пароль для администратора</h2>
-        <input type="password" v-model="password"/> 
+        <input 
+        :class="{ error: isError }"
+        type="password" 
+        v-model="password"/> 
         <ButtonComponent
             text="Авторизоваться"
             @click="authorize"/>  
@@ -10,25 +13,26 @@
 
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref } from 'vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 
 const password = ref('');
-
+const isError = ref(false); 
 
 const authorize = async () => {
+    isError.value = false;
     if (!password.value) {
-        alert('Введите пароль!');
+       isError.value = true;
         return;
     }
-
     try {
         const response = await fetch(`http://127.0.0.1:8000/admin/login/?password=${encodeURIComponent(password.value)}`);
         const data = await response.json();
         if (data) {
+            sessionStorage.setItem('adminPassword', password.value);
             window.location.href = '/#/getalldata/';
         } else {
-            alert('Ошибка авторизации');
+           isError.value = true;
         }
     } catch (err) {
         console.error('Ошибка подключения', err);
@@ -36,9 +40,6 @@ const authorize = async () => {
     }
 };
 
-onBeforeMount(() =>{
-
-})
 
 </script>
 
@@ -58,5 +59,8 @@ input{
     outline: #4a90e2;
     border-radius: 15px;
     margin-bottom: 50px;
+}
+.error{
+    border: 2px solid red;
 }
 </style>
