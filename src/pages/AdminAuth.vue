@@ -2,15 +2,14 @@
     <div class="auth_container">
         <h2>Введите пароль для администратора</h2>
         <input 
-        :class="{ error: isError }"
-        type="password" 
-        v-model="password"/> 
+            :class="{ error: isError }"
+            type="password" 
+            v-model="password"/> 
         <ButtonComponent
             text="Авторизоваться"
             @click="authorize"/>  
     </div>
 </template>
-
 
 <script setup>
 import { ref } from 'vue';
@@ -39,8 +38,6 @@ const authorize = async () => {
         alert('Ошибка подключения');
     }
 };
-
-
 </script>
 
 <style scoped>
@@ -50,6 +47,7 @@ const authorize = async () => {
     justify-content: center;
     flex-direction: column;
     height: 100vh;
+    text-align: center;
 }
 
 input{
@@ -60,7 +58,26 @@ input{
     border-radius: 15px;
     margin-bottom: 50px;
 }
-.error{
+
+.error {
     border: 2px solid red;
+}
+
+
+@media (max-width: 768px) {
+    input {
+        width: 300px;
+    }
+}
+
+@media (max-width: 485px) {
+    h2 {
+        font-size: 18px;
+    }
+
+    input {
+        width: 250px;
+        height: 28px;
+    }
 }
 </style>

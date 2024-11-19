@@ -23,7 +23,7 @@ const handleClick = () => {
 </script>
   
 <style scoped>
- button{
+button {
   padding: 20px 35px;
   font-size: 50px;
   font-weight: bold;
@@ -33,8 +33,22 @@ const handleClick = () => {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
- }
- button:hover {
-    background-color: #2c5f8a;
+}
+button:hover {
+  background-color: #2c5f8a;
+}
+
+@media (max-width: 768px) {
+  button {
+    padding: 15px 25px;
+    font-size: 40px;
   }
+}
+
+@media (max-width: 480px) {
+  button {
+    padding: 10px 20px;
+    font-size: 25px;
+  }
+}
 </style>
