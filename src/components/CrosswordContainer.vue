@@ -76,7 +76,6 @@ const checkWord = async (wordObj) => {
     else row++;
   }
   const response = await fetch(`http://5.35.124.40:8000/api/check-data/?id=${wordObj.id_db}&answer=${userWord}`);
-  // const response = await fetch(`http://5.35.124.40:8000/api/check-data/?id=${wordObj.id_db}&answer=${userWord}`);
   const data = await response.json();
   return data;
 };
@@ -111,11 +110,10 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
   padding: 20px;
 }
 
-
 .overflow-container {
   overflow: auto;
   max-width: 100vw;
-  max-height: 80vh; 
+  max-height: 80vh;
   padding: 10px;
   box-sizing: border-box;
 }
@@ -163,6 +161,15 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
 }
 
 
+@media (min-width: 768px) {
+  .overflow-container {
+    overflow: hidden;
+    max-width: 100%; 
+    max-height: 100%;
+  }
+}
+
+
 @media (max-width: 768px) {
   .cell {
     width: 40px;
@@ -185,5 +192,4 @@ watch(() => props.crosswordData, initCrossword, { immediate: true });
     font-size: 10px;
   }
 }
-
 </style>

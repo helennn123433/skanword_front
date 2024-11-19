@@ -40,7 +40,6 @@ onMounted(async () => {
      response = await fetch(`http://5.35.124.40:8000/api/get-cross/`);
     }else{
       const count = route.query.count || 5;
-    // const response = await fetch(`http://5.35.124.40:8000/api/get-cross/?count=${count}`);
       response = await fetch(`http://5.35.124.40:8000/api/get-cross/?count=${count}`);
     }
     const data = await response.json();

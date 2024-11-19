@@ -35,6 +35,9 @@ const answeredQuestions = computed(() =>
 <style scoped>
 #questions-container {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .question  {
@@ -44,7 +47,6 @@ const answeredQuestions = computed(() =>
 .question strong {
   font-size: 20px;
 }
-
 
 .answered-question {
   color: gray;

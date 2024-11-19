@@ -23,7 +23,7 @@ const closeModal = () => {
 }
 const createWord = async () => {
     try {
-        await fetch(`http://5.35.124.40:8000/admin/add-solution/`, {
+        await fetch(`http://127.0.0.1:8000/admin/add-solution/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
